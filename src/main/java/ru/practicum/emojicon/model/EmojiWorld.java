@@ -16,6 +16,10 @@ public class EmojiWorld extends EmojiObject implements EntityResolver, EmojiObje
         this.setHeight(2048);
     }
 
+    private static boolean isInstanse(EmojiWorldObject obj) {
+        return obj instanceof Controllable;
+    }
+
     @Override
     public void drawFrame(Frame frame) {
         drawEarth(frame);
@@ -61,7 +65,11 @@ public class EmojiWorld extends EmojiObject implements EntityResolver, EmojiObje
 
     @Override
     public void handleKey(KeyStroke key) {
-        objects.stream().filter(obj -> obj.getId().equals(selection)).filter(obj -> obj instanceof Controllable).map(obj -> (Controllable) obj).forEach(obj -> {
+        objects.stream()
+                .filter(obj -> obj.getId().equals(selection))
+                .filter(EmojiWorld::isInstanse)
+                .map(Controllable.class::cast)
+                .forEach(obj -> {
             switch (key.getKeyType()){
                 case ArrowDown:
                 case ArrowLeft:
@@ -106,4 +114,9 @@ public class EmojiWorld extends EmojiObject implements EntityResolver, EmojiObje
     public Optional<? extends Entity> findEntity(UUID uuid) {
         return objects.stream().filter(obj -> obj.getId().equals(uuid)).findFirst(); //TODO заменить на Map и поиск по ключу
     }
+
+    public List<EmojiWorldObject> getObjects() {
+        return objects;
+    }
+    // внесли изменения в локальный репозиторий
 }
