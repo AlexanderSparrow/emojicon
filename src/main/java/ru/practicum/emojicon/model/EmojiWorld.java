@@ -112,7 +112,7 @@ public class EmojiWorld extends EmojiObject implements EntityResolver, EmojiObje
 
     @Override
     public Optional<? extends Entity> findEntity(UUID uuid) {
-        return objects.stream().filter(obj -> obj.getId().equals(uuid)).findFirst(); //TODO заменить на Map и поиск по ключу
+        return objects.stream().filter(obj -> obj.getId().equals(uuid)).findFirst();  //TODO заменить на Map и поиск по ключу
     }
 
     public List<EmojiWorldObject> getObjects() {
